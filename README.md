@@ -1,4 +1,7 @@
 # test
 Experiment a bit
 
-My first commit
+To install:
+```bash
+curl -sSL https://raw.githubusercontent.com/hakwerk/test/master/install.sh | bash
+```
