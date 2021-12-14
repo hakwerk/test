@@ -30,3 +30,8 @@ jobs:
         with:
           repository: letsencrypt/boulder
           ref: ${{ steps.boulder.outputs.tag }}
+          path: boulder
+
+      - name: Run another script
+        run: |
+          ls -latr
