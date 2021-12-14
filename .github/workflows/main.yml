@@ -6,18 +6,14 @@ on:
   pull_request:
     branches: [ master ]
   workflow_dispatch:
+#  schedule:
+#    - cron: "0 3 * * *"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
-      - name: Run a multi-line script
-        run: |
-          ls -latr
-          echo Add other actions to build,
-          echo test, and deploy your project.
 
       - uses: oprypin/find-latest-tag@v1
         with:
@@ -34,4 +30,10 @@ jobs:
 
       - name: Run another script
         run: |
+          cd boulder
           ls -latr
+
+# TODO: apply patches
+
+# TODO: build docker, push ?? iff different from latest image, possible determined from tags?
+# see https://github.com/marketplace/actions/version-increment
