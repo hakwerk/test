@@ -1,0 +1,33 @@
+name: Test CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run a multi-line script
+        run: |
+          ls -latr
+          echo Add other actions to build,
+          echo test, and deploy your project.
+
+      - uses: oprypin/find-latest-tag@v1
+        with:
+          repository: letsencrypt/boulder
+          releases-only: true
+        id: boulder
+
+      - run: echo "Boulder is at version ${{ steps.boulder.outputs.tag }}"
+
+      - uses: actions/checkout@v2
+        with:
+          repository: letsencrypt/boulder
+          ref: ${{ steps.boulder.outputs.tag }}
