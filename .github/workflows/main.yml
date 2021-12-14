@@ -22,7 +22,6 @@ jobs:
       - uses: oprypin/find-latest-tag@v1
         with:
           repository: letsencrypt/boulder
-          releases-only: true
         id: boulder
 
       - run: echo "Boulder is at version ${{ steps.boulder.outputs.tag }}"
