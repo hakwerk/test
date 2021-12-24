@@ -58,7 +58,6 @@ jobs:
         with:
           context: .
           tags: |
-            #hakwerk/test:latest
             ghcr.io/hakwerk/test:latest
           push: ${{ github.ref == 'refs/heads/master' }}
 
