@@ -17,11 +17,11 @@ rm -rf $TMP_DIR && mkdir -p $TMP_DIR/{admin,bin,logs}
 
 echo
 BASEDIR=/go/src/github.com/letsencrypt/boulder
-docker run -it -v $dr/boulder:$BASEDIR:cached -v $TMP_DIR/bin:$BASEDIR/bin -w $BASEDIR -e BUILD_HOST=$BUILD_HOST $BUILD_IMAGE make build
+docker run -i -v $dr/boulder:$BASEDIR:cached -v $TMP_DIR/bin:$BASEDIR/bin -w $BASEDIR -e BUILD_HOST=$BUILD_HOST $BUILD_IMAGE make build
 
 #echo
 #BASEDIR=/go/src/labca
-#docker run -it -v $TMP_DIR/admin:$BASEDIR:cached -v $TMP_DIR:$BASEDIR/bin -w $BASEDIR $BUILD_IMAGE ./setup.sh
+#docker run -i -v $TMP_DIR/admin:$BASEDIR:cached -v $TMP_DIR:$BASEDIR/bin -w $BASEDIR $BUILD_IMAGE ./setup.sh
 
 echo
 ./upx -q $(find tmp/ -type f)

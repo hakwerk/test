@@ -7,10 +7,10 @@ r=0
 
 cd $dr/boulder
 for p in $(find $dr/patches -type f | sort -d); do
-    echo "== $p"
+    #echo "== $p"
     patch -p1 <$p
     let r=r+$?
-    if [ $r -gt 0 ]; then exit 9; fi
+    #if [ $r -gt 0 ]; then exit 9; fi
 done
 cd - >/dev/null
 
