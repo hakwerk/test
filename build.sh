@@ -14,6 +14,10 @@ rm -rf $TMP_DIR && mkdir -p $TMP_DIR/{admin,bin,logs}
 #cp -rp $dr/gui/* $TMP_DIR/admin/
 #sed -i -e "s/^bin\/labca//" $TMP_DIR/admin/setup.sh
 #sed -i '/^$/d' $TMP_DIR/admin/setup.sh
+mkdir $TMP_DIR/admin/templates
+echo TODO > $TMP_DIR/admin/templates/TODO
+touch $TMP_DIR/labca
+touch $TMP_DIR/admin/setup.sh
 
 echo
 BASEDIR=/go/src/github.com/letsencrypt/boulder
