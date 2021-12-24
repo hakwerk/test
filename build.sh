@@ -28,7 +28,7 @@ docker run -i -v $dr/boulder:$BASEDIR:cached -v $TMP_DIR/bin:$BASEDIR/bin -w $BA
 #docker run -i -v $TMP_DIR/admin:$BASEDIR:cached -v $TMP_DIR:$BASEDIR/bin -w $BASEDIR $BUILD_IMAGE ./setup.sh
 
 echo
-./upx -q $(find tmp/ -type f)
+./upx -q $(find tmp/ -type f ! -size 0 -exec grep -IL . "{}" \;)
 echo
 
 popd >/dev/null
