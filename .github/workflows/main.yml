@@ -15,6 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
       - uses: oprypin/find-latest-tag@v1
         with:
           repository: letsencrypt/boulder
@@ -28,12 +31,36 @@ jobs:
           ref: ${{ steps.boulder.outputs.tag }}
           path: boulder
 
-      - name: Run another script
-        run: |
-          cd boulder
-          ls -latr
+      - name: Apply our patches
+        run: ./patch.sh
 
-# TODO: apply patches
+      - name: Build the binaries
+        run: ./build.sh
 
-# TODO: build docker, push ?? iff different from latest image, possible determined from tags?
-# see https://github.com/marketplace/actions/version-increment
+      - name: Get next version
+        uses: reecetech/version-increment@2021.11.2
+        id: version
+        with:
+          scheme: calver
+          #increment: patch
+
+      - run: echo "Would tag this images as ${{ steps.version.outputs.version }}"
+
+      - name: Login to Github Packages
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PIPELINE_PAT_TEST }}
+
+      - name: Build image and push to Docker Hub and GitHub Container Registry
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          tags: |
+            #hakwerk/test:latest
+            ghcr.io/hakwerk/test:latest
+          push: ${{ github.ref == 'refs/heads/master' }}
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}

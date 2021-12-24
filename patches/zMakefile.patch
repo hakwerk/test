@@ -1,0 +1,24 @@
+diff --git a/Makefile b/Makefile
+index 6427367f..6580f142 100644
+--- a/Makefile
++++ b/Makefile
+@@ -14,16 +14,16 @@ OBJECTS = $(CMD_BINS)
+ # Build environment variables (referencing core/util.go)
+ COMMIT_ID = $(shell git rev-parse --short=8 HEAD)
+ 
+-BUILD_ID = $(shell git symbolic-ref --short=8 HEAD 2>/dev/null) +$(COMMIT_ID)
++BUILD_ID = $(shell git describe --always HEAD 2>/dev/null) +$(COMMIT_ID)
+ BUILD_ID_VAR = github.com/letsencrypt/boulder/core.BuildID
+ 
+-BUILD_HOST = $(shell whoami)@$(shell hostname)
++BUILD_HOST ?= labca-develop
+ BUILD_HOST_VAR = github.com/letsencrypt/boulder/core.BuildHost
+ 
+ BUILD_TIME = $(shell date -u)
+ BUILD_TIME_VAR = github.com/letsencrypt/boulder/core.BuildTime
+ 
+-GO_BUILD_FLAGS = -ldflags "-X \"$(BUILD_ID_VAR)=$(BUILD_ID)\" -X \"$(BUILD_TIME_VAR)=$(BUILD_TIME)\" -X \"$(BUILD_HOST_VAR)=$(BUILD_HOST)\""
++GO_BUILD_FLAGS = -ldflags "-s -w -X \"$(BUILD_ID_VAR)=$(BUILD_ID)\" -X \"$(BUILD_TIME_VAR)=$(BUILD_TIME)\" -X \"$(BUILD_HOST_VAR)=$(BUILD_HOST)\""
+ 
+ .PHONY: all build
+ all: build
