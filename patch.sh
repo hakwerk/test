@@ -6,7 +6,7 @@ dr=$(dirname $(realpath $0))
 r=0
 
 cd $dr/boulder
-for p in $(find $dr/patches -type f | sort); do
+for p in $(find $dr/patches -type f | sort -d); do
     echo "== $p"
     patch -p1 <$p
     let r=r+$?
